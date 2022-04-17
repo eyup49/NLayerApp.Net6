@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLayer.API.Filter;
 using NLayer.Core;
 using NLayer.Core.DTOs;
 using NLayer.Core.Services;
