@@ -27,6 +27,7 @@ namespace NLayer.API.Controllers
             var productDto = _mapper.Map<List<ProductDto>>(product.ToList());
             return CreateActionResult(CustomResponseDto<List<ProductDto>>.Success(200,productDto));
         }
+        [ServiceFilter(typeof(NotFoundFilter<Product>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
