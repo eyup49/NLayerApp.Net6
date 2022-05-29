@@ -7,12 +7,7 @@ using NLayer.Core.Repositories;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
 using NLayer.Service.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayer.Caching
 {
@@ -66,23 +61,23 @@ namespace NLayer.Caching
         public Task<Product> GetByIdAsync(int id)
         {
             var product = _memoryCache.Get<List<Product>>(CacheProductKey).FirstOrDefault(x => x.Id == id);
-            if (product==null)
+            if (product == null)
             {
                 throw new NotFoundException($"{typeof(Product).Name}({id}) not found");
             }
             return Task.FromResult(product);
         }
 
-        public  Task<CustomResponseDto<List<ProductWithCategoryDto>>> GetProductsWithCategory()
+        public Task<List<ProductWithCategoryDto>> GetProductsWithCategory()
         {
             var products = _memoryCache.Get<IEnumerable<Product>>(CacheProductKey);
             var productWithCategory = _mapper.Map<List<ProductWithCategoryDto>>(products);
-            return Task.FromResult(CustomResponseDto<List<ProductWithCategoryDto>>.Success(200, productWithCategory));
+            return Task.FromResult(productWithCategory);
         }
 
         public async Task RemoveAsync(Product entity)
         {
-             _repository.Remove(entity);
+            _repository.Remove(entity);
             await _unitOfWork.CommitAsync();
             await CacheAllProdcutsAsync();
         }
