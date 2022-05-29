@@ -55,7 +55,7 @@ namespace NLayer.API.Controllers
             await _productService.RemoveAsync(product);
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
-        [HttpGet("action")]
+        [HttpGet("GetProductWithCategory")]
         public async Task<IActionResult> GetProductWithCategory()
         {
             return CreateActionResult(await _productService.GetProductsWithCategory());
